@@ -1,0 +1,56 @@
+#!/bin/sh
+
+set -e
+
+if [[ $1 != "download" ]]; then
+  cd ${0%/*}/..
+  SCRIPT_NAME=${0##*/}
+  echo "-I|Prepare validators inside docker ..."
+  docker run --rm -i -v $(pwd)/xsl:/xsl -v $(pwd)/xsd:/xsd -v $(pwd)/sch:/sch -v $(pwd)/bin:/app sdu-isdoc-validator /bin/sh -c "/app/$SCRIPT_NAME download"
+  echo "-I|Finished, available validation files:"
+  ls -l xsl/*.xsl
+  ls -l xsd/*.xsd
+  exit
+fi
+
+set -v
+
+ISDOC_VERSION=6.0.2
+ISDOC_SDU_VERSION=0.0.1
+
+# Download ISDOC XSD schema
+wget -q https://raw.githubusercontent.com/isducz/isdoc.github.io/master/xsd/isdoc-invoice-${ISDOC_VERSION}.xsd \
+  -O /xsd/isdoc-invoice-${ISDOC_VERSION}.xsd
+
+# Download xsl to convert schematron to xsl ;-)
+# Origin: https://code.google.com/archive/p/schematron/downloads
+cd /xsl
+if [[ ! -f iso-schematron-xslt2.zip ]]; then
+  wget -q https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/schematron/iso-schematron-xslt2.zip \
+    -O iso-schematron-xslt2.zip
+  unzip -q -o -d iso-schematron-xslt2 iso-schematron-xslt2.zip
+fi
+
+# Download ISDOC SCH rules
+wget -q https://raw.githubusercontent.com/isducz/isdoc.github.io/master/sch/isdoc-${ISDOC_VERSION}.sch \
+  -O /xsl/isdoc-${ISDOC_VERSION}.sch
+
+function xslt() {
+  java -classpath /java/saxon.jar net.sf.saxon.Transform -s:$1 -xsl:$2 -o:$3
+}
+
+function sch_to_xsl() {
+  local base_name="$1"
+
+  xslt "/sch/${base_name}.sch" iso-schematron-xslt2/iso_dsdl_include.xsl temp1.sch
+  xslt temp1.sch iso-schematron-xslt2/iso_abstract_expand.xsl temp2.sch
+  xslt temp2.sch iso-schematron-xslt2/iso_schematron_message_xslt2.xsl "/xsl/${base_name}.xsl"
+  rm -f temp1.sch temp2.sch
+}
+
+ISDOC_XSL="isdoc-${ISDOC_VERSION}"
+ISDOC_SDU_XSL="isdoc-sdu-${ISDOC_SDU_VERSION}"
+
+# Convert schematron rules to XSL
+sch_to_xsl "$ISDOC_XSL"
+sch_to_xsl "$ISDOC_SDU_XSL"

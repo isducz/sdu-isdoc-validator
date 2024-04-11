@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+cd ${0%/*}/..
+
+if (( $# != 1 )); then
+  echo "Usage: ${0##*/} <INPUT_ISDOC>" >&2
+  exit 1
+fi
+
+INPUT_ISDOC="$1"
+
+ISDOC_VERSION=6.0.2
+ISDOC_SDU_VERSION=0.0.1
+
+echo "-I|Validate ISDOC XSD ..."
+bin/xmllint --schema xsd/isdoc-invoice-${ISDOC_VERSION}.xsd "${INPUT_ISDOC}" --noout
+echo "-I|Validate ISDOC XSL (Schematron) rules ..."
+bin/xslt "${INPUT_ISDOC}" "xsl/isdoc-${ISDOC_VERSION}.xsl"
+echo "-I|Validate SDU XSL (Schematron) rules ..."
+bin/xslt "${INPUT_ISDOC}" "xsl/isdoc-sdu-${ISDOC_SDU_VERSION}.xsl"
