@@ -10,8 +10,8 @@ Prováděné validace:
 ## Příprava validátorů
 
 Požadavky:
-- Docker CLI (příkaz docker)
-- Bash (macOS/WSL/...) (příkaz /bin/bash)
+- docker CLI
+- /bin/sh
 
 Testováno na:
 - Apple macOS
