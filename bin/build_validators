@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ $1 != "download" ]]; then
+if [ "$1" != "download" ]; then
   cd ${0%/*}/..
   SCRIPT_NAME=${0##*/}
   echo "-I|Prepare validators inside docker ..."
@@ -33,7 +33,7 @@ fi
 
 # Download ISDOC SCH rules
 wget -q https://raw.githubusercontent.com/isducz/isdoc.github.io/master/sch/isdoc-${ISDOC_VERSION}.sch \
-  -O /xsl/isdoc-${ISDOC_VERSION}.sch
+  -O /sch/isdoc-${ISDOC_VERSION}.sch
 
 function xslt() {
   java -classpath /java/saxon.jar net.sf.saxon.Transform -s:$1 -xsl:$2 -o:$3

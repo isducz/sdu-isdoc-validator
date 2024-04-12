@@ -7,14 +7,20 @@ Prováděné validace:
 - [Vybraná pravidla ISDOC](https://isdoc.cz/6.0.2/sch/isdoc-6.0.2.sch) (v. 6.0.2 - Schematron)
 - [Dodatečná SDU pravidla](https://github.com/isducz/sdu-isdoc-validator/blob/main/sch/isdoc-sdu-0.0.1.sch) (v. 0.0.1 - Schematron)
 
-## Příprava validace
-- Docker
-- Bash (macOS/WSL/...)
+## Příprava validátorů
+
+Požadavky:
+- Docker CLI (příkaz docker)
+- Bash (macOS/WSL/...) (příkaz /bin/bash)
+
+Testováno na:
+- Apple macOS
+- MS Windows 10 + WSL 2.0 s Ubuntu ditribucí
 
 ```
 # Jednorázově
 bin/build_image
-# Poprvé nebo pokud dojde ke změně standardu
+# Poprvé a/nebo pokud dojde ke změně standardu
 bin/build_validators
 ```
 
