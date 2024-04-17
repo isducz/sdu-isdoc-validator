@@ -16,6 +16,8 @@ ISDOC_SDU_VERSION=0.0.1
 
 echo "-I|Validate ISDOC XSD ..."
 bin/xmllint --schema xsd/isdoc-invoice-${ISDOC_VERSION}.xsd "${INPUT_ISDOC}" --noout
+echo "-I|Validate SDU XSD ..."
+bin/xmllint --schema xsd/isdoc-sdu-${ISDOC_SDU_VERSION}.xsd "${INPUT_ISDOC}" --noout
 echo "-I|Validate ISDOC XSL (Schematron) rules ..."
 bin/xslt "${INPUT_ISDOC}" "xsl/isdoc-${ISDOC_VERSION}.xsl"
 echo "-I|Validate SDU XSL (Schematron) rules ..."

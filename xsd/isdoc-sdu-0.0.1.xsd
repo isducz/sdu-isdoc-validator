@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://isdoc.cz/namespace/2024/extensions/sdu"
+    xmlns:sdu="http://isdoc.cz/namespace/2024/extensions/sdu"
+    xmlns:isdoc="http://isdoc.cz/namespace/2013"
+    elementFormDefault="qualified">
+
+    <xs:import namespace="http://isdoc.cz/namespace/2013" schemaLocation="isdoc-invoice-6.0.2.xsd" />
+
+    <xs:element name="InvoiceExtensions" type="sdu:InvoiceExtensionsType" />
+    <xs:complexType name="InvoiceExtensionsType">
+        <xs:sequence>
+            <xs:element name="IssueTime" type="sdu:TimeType" minOccurs="0" />
+            <xs:element name="ProductCategoryTaxonomy" type="sdu:TaxonomyType" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="InvoiceLineExtensions" type="sdu:InvoiceLineExtensionsType" />
+    <xs:complexType name="InvoiceLineExtensionsType">
+        <xs:sequence>
+            <xs:element name="WarrantyMonths" type="xs:integer" minOccurs="0" />
+            <xs:element name="ProductCategoryPath" type="xs:string" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="TimeType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d\d:\d\d:\d\d" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TaxonomyType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="custom" />
+            <xs:enumeration value="Google Merchant" />
+            <xs:enumeration value="Zbozi.cz" />
+            <xs:enumeration value="Heureka.cz" />
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

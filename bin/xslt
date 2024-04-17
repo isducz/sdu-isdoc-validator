@@ -10,4 +10,4 @@ fi
 INPUT_XML="$1"
 XSL="$2"
 
-docker run --rm -i -v $(pwd):/src sdu-isdoc-validator java -classpath /java/saxon.jar net.sf.saxon.Transform -s:${INPUT_XML} -xsl:${XSL}
+docker run --network none --rm -i -v $(pwd):/src sdu-isdoc-validator java -Xmx256m -classpath /java/saxon.jar net.sf.saxon.Transform -s:${INPUT_XML} -xsl:${XSL}
