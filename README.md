@@ -3,16 +3,16 @@
 Tento repositář slouží k offline validaci ISDOC zjednodušených datových dokladů s rozšířenou validací pro SDU.
 
 Prováděné validace:
-- [XSD schéma ISDOC](https://isdoc.cz/6.0.2/xsd/isdoc-invoice-6.0.2.xsd) (v. 6.0.2)
-- [XSD schéma ISDOC + SDU](https://isdoc.cz/6.0.2/xsd/isdoc-sdu-0.0.1.xsd) (v. 0.0.1)
+- [XML schéma ISDOC](https://isdoc.cz/6.0.2/xsd/isdoc-invoice-6.0.2.xsd) (v. 6.0.2)
+- [XML schéma ISDOC + SDU](https://github.com/isducz/sdu-isdoc-validator/blob/main/xsd/isdoc-sdu-0.0.1.xsd) (v. 0.0.1)
 - [Vybraná pravidla ISDOC](https://isdoc.cz/6.0.2/sch/isdoc-6.0.2.sch) (v. 6.0.2 - Schematron)
 - [Dodatečná SDU pravidla](https://github.com/isducz/sdu-isdoc-validator/blob/main/sch/isdoc-sdu-0.0.1.sch) (v. 0.0.1 - Schematron)
 
 ## Příprava validátorů
 
 Požadavky:
-- docker CLI
-- /bin/sh
+- `docker` CLI
+- `/bin/sh`
 
 Testováno na:
 - Apple macOS
